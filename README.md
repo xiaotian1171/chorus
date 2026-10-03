@@ -5,6 +5,16 @@ Turn your notes into a song you cannot get out of your head.
 **Play it:** https://xiaotian1171.github.io/chorus/
 **Built for:** [Pollinations Quest #15727](https://github.com/pollinations/pollinations/issues/15727) — songs to remember facts.
 
+## Screens
+
+| The desk | The song | The quiz |
+| --- | --- | --- |
+| ![The desk](docs/the-desk.png) | ![The song](docs/the-song.png) | ![The quiz](docs/the-quiz.png) |
+
+| The playlist |
+| --- |
+| ![The playlist](docs/the-playlist.png) |
+
 ## What it is
 
 Paste the notes you keep failing to remember — a fact list, a formula sheet, the
@@ -116,13 +126,20 @@ model that is a few Pollen at most, and it is your Pollen, spent only when you p
 
 ## Verified
 
-Walked in a real browser (Chrome on a cloud desktop, 2026-10-03) against the
-deployed page — see the screenshots below.
+Walked end to end in a real browser (Chrome on a cloud desktop, 2026-10-03) against
+the deployed page, signed out: opened the desk, loaded the starter song (28 lyric
+lines, every fact marked in the sheet), asked it to sing and got the Pollen message
+instead of a failure, took the quiz — the word really is missing from the line and
+the blank really is there — answered one right, one wrong and gave up on a third,
+read the score, saved the song to the playlist (kept with its facts and lyrics) and
+watched writing a song from notes refuse politely on the desk. Every screen was
+asserted visible when it should be, and the console was empty of errors. The
+screenshots above are from that run.
 
-Not covered by that run: writing a song and singing it, because both spend the
-visitor's Pollen and no key was signed in. The code path is `writeSong()` and
-`sing()`; both are behind the sign-in gate, and signed out the app refuses them
-with a message rather than failing.
+Not covered by that run: writing a song from your own notes and hearing it sung,
+because both spend the visitor's own Pollen and no key was signed in. Those are
+`writeSong()` and `sing()`; both sit behind the sign-in gate, and signed out the app
+says so instead of failing halfway.
 
 ## Licence
 
