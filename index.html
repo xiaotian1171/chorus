@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chorus — turn your notes into a song you cannot get out of your head</title>
+<meta name="description" content="Paste your notes, pick a style, get a short sung track that encodes the facts, then quiz yourself on the words it blanks out. Built on Pollinations." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="bar">
+    <div class="brand"><span class="dot"></span> Chorus</div>
+    <div class="bar-right">
+        <span id="wallet" class="chip hidden"></span>
+        <span id="mode" class="chip">not signed in</span>
+        <button id="signin" class="btn ghost small">Sign in</button>
+        <button id="signout" class="btn ghost small hidden">Sign out</button>
+        <button id="to-playlist" class="btn ghost small">My playlist</button>
+    </div>
+</header>
+
+<main>
+
+    <!-- --------------------------------------------------------------- the desk -->
+    <section id="write" class="panel">
+        <h1>Paste the notes. Get a song you cannot get out of your head.</h1>
+        <p class="lede">
+            A fact list, a formula sheet, vocabulary, the cranial nerves — anything you have to
+            remember and keep forgetting. The song puts it in rhyme, then the quiz takes the words
+            back out and makes you sing them.
+        </p>
+
+        <label class="field">
+            <span>Your notes</span>
+            <textarea id="notes" rows="7" placeholder="The seven layers of the OSI model, bottom to top: Physical (bits on the wire), Data Link (frames, MAC addresses), Network (IP, routing), Transport (TCP and UDP), Session, Presentation, Application.&#10;&#10;Or just a list. Or a paragraph. Rough notes are fine."></textarea>
+        </label>
+
+        <p class="kicker">The style it should be sung in</p>
+        <div id="style-chips" class="chips"></div>
+
+        <div class="grid3">
+            <label class="field"><span>Lyrics model</span><select id="text-model"></select></label>
+            <label class="field"><span>Song model</span><select id="song-model"></select></label>
+        </div>
+
+        <div class="row">
+            <button id="write-go" class="btn primary">Write the song</button>
+            <button id="starter" class="btn ghost">Try the starter song</button>
+        </div>
+
+        <p id="setup-note" class="note">
+            Nothing here is stored on a server. The starter song works with no account at all — a
+            full lyric sheet and a quiz. Writing your own song and hearing it sung runs on your own
+            Pollinations balance: sign in and it stays yours.
+        </p>
+
+        <details id="signin-box" class="box">
+            <summary>Sign in with your own Pollen</summary>
+            <p class="fine">
+                Bring your own Pollen keeps this free to run: the lyrics and the sung track are billed
+                to your own Pollinations balance, never to mine. The key stays in this tab and is gone
+                when you close it.
+            </p>
+            <div class="row tight">
+                <button id="oauth" class="btn small">Sign in with Pollinations</button>
+            </div>
+            <p class="fine">
+                No OAuth client registered for this page? Paste a key from <code>enter.pollinations.ai/keys</code>,
+                or put this page's hostname in as a client id below.
+            </p>
+            <div class="row tight">
+                <input id="pastekey" type="password" placeholder="sk_…" autocomplete="off" />
+                <button id="usekey" class="btn small">Use this key</button>
+            </div>
+            <label class="field">
+                <span>OAuth client id — optional</span>
+                <input id="appkey" type="text" placeholder="your registered client id" />
+            </label>
+            <p id="auth-note" class="fine">
+                Sign-in is the authorization-code flow with PKCE. Nothing is stored beyond this tab.
+            </p>
+        </details>
+    </section>
+
+    <!-- --------------------------------------------------------------- the song -->
+    <section id="song" class="panel hidden">
+        <p class="kicker" id="song-style"></p>
+        <h2 id="song-title"></h2>
+        <p id="song-subject" class="fine"></p>
+        <div id="lyrics" class="lyrics"></div>
+        <p id="sing-note" class="fine"></p>
+        <div class="row">
+            <button id="sing" class="btn primary">Sing it</button>
+            <button id="quiz-me" class="btn ghost">Quiz me on it</button>
+            <button id="save" class="btn ghost">Save to my playlist</button>
+        </div>
+        <div class="row">
+            <button id="back" class="btn ghost small">Write another</button>
+        </div>
+    </section>
+
+    <!-- --------------------------------------------------------------- the quiz -->
+    <section id="quiz" class="panel hidden">
+        <p class="kicker" id="quiz-progress"></p>
+        <h2>Sing the missing word</h2>
+        <p id="quiz-line" class="premise"></p>
+        <div class="row tight">
+            <input id="quiz-input" type="text" placeholder="the word that is missing" autocomplete="off" />
+            <button id="check" class="btn small primary">Check</button>
+            <button id="reveal" class="btn ghost small">Show me</button>
+        </div>
+        <p id="quiz-feedback" class="fine"></p>
+        <div class="row">
+            <button id="next" class="btn primary hidden">Next fact</button>
+        </div>
+        <div id="quiz-done" class="hidden">
+            <p id="quiz-score" class="premise"></p>
+            <div class="row">
+                <button id="quiz-again" class="btn primary">Quiz me again</button>
+                <button id="quiz-back" class="btn ghost">Back to the song</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- the playlist -->
+    <section id="playlist" class="panel hidden">
+        <p class="kicker">Saved in this browser</p>
+        <h2>My study playlist</h2>
+        <div id="playlist-list" class="notes"></div>
+        <p id="playlist-note" class="fine"></p>
+        <div class="row">
+            <button id="back-from-playlist" class="btn primary">Back to the desk</button>
+        </div>
+    </section>
+
+</main>
+
+<footer class="fine">
+    Lyrics, songs and voices come from
+    <a href="https://pollinations.ai" target="_blank" rel="noreferrer">Pollinations</a>.
+    Bring your own Pollen. MIT licensed.
+</footer>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="pack.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
