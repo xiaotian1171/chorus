@@ -16,6 +16,7 @@ const APP_URL = location.origin + location.pathname.replace(/index\.html$/, "");
 const SS = { token: "ch.token", verifier: "ch.verifier", state: "ch.state" };
 const PREF = "ch.prefs";
 const APPKEY = "ch.appkey";
+const DEFAULT_APPKEY = "pk_DmQjyQPdqrEibkOC";
 
 const SCREENS = ["write", "song", "quiz", "playlist"];
 const SHORT_SONG = "google/lyria-3-clip-preview";
@@ -616,7 +617,7 @@ async function startAuth() {
     const params = new URLSearchParams({
         response_type: "code",
         redirect_uri: APP_URL,
-        client_id: appkey || location.hostname,
+        client_id: appkey || DEFAULT_APPKEY,
         scope: "profile usage",
         state: nonce,
         code_challenge: await s256(verifier),
@@ -640,7 +641,7 @@ async function finishAuth(code, returnedState) {
         code,
         redirect_uri: APP_URL,
         code_verifier: verifier,
-        client_id: appkey || location.hostname,
+        client_id: appkey || DEFAULT_APPKEY,
     });
     const response = await fetch(`${ENTER}/api/oauth/token`, {
         method: "POST",
@@ -909,7 +910,7 @@ function init() {
         el.signin.classList.add("hidden");
         el.signout.classList.remove("hidden");
     }
-    el.appkey.value = localStorage.getItem(APPKEY) || "";
+    el.appkey.value = localStorage.getItem(APPKEY) || DEFAULT_APPKEY;
     syncMode();
     render();
     loadPlaylist();
